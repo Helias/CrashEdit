@@ -3,7 +3,12 @@ using Crash.UI;
 using System;
 using System.IO;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.Text;
 using System.Windows.Forms;
+
+using Actionx = Crash.UI.Action;
 
 namespace CrashEdit
 {
@@ -60,7 +65,7 @@ namespace CrashEdit
             tbiFindNext.Text = Properties.Resources.Toolbar_FindNext;
             tbiGotoEID.Text = Properties.Resources.Toolbar_GotoEID;
 
-            foreach (Crash.UI.Action action in Crash.UI.Action.AllActions)
+            foreach (Actionx action in Actionx.AllActions)
             {
                 ToolStripMenuItem tsi = new ToolStripMenuItem();
                 tsi.Tag = action;
@@ -107,7 +112,7 @@ namespace CrashEdit
                 }
                 foreach (ToolStripItem tsi in mnuEdit.DropDownItems)
                 {
-                    Crash.UI.Action action = (Crash.UI.Action)tsi.Tag;
+                    Actionx action = (Actionx)tsi.Tag;
                     if (action.CheckCompatibility(maincontrol.SelectedController))
                     {
                         tsi.Text = action.GetText(maincontrol.SelectedController);
@@ -276,7 +281,7 @@ namespace CrashEdit
         private void mniEditAction_Click(object sender,EventArgs e)
         {
             MainControl maincontrol = (MainControl)uxTabs.SelectedTab.Tag;
-            Crash.UI.Action action = (Crash.UI.Action)((ToolStripItem)sender).Tag;
+            Actionx action = (Actionx)((ToolStripItem)sender).Tag;
             Command command = action.Activate(maincontrol.SelectedController);
             if (command == null)
             {
